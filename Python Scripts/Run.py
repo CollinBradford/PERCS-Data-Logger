@@ -7,7 +7,7 @@ import threading
 
 class Run(threading.Thread):
     '''
-    This object manages the sample run. When the start() function is called, it continues
+    This Class manages the sample run. When the start() function is called, it continues
     to listen to the arduino for any input and records it to the logging file. 
     To stop the run, call the stop() function. 
     '''

@@ -94,10 +94,19 @@ class Arduino(object):
         self.sendCommand(self.SET_SAMPLE_SIZE, self.channelCount)
     
     def setSampleFrequency(self, sampleFrequency):
+        '''
+        Sets the sample frequency (different from the report frequency.
+        @param sampleFrequency: The delay in milliseconds between samples. 
+        '''
         self.sampleFrequency = sampleFrequency
         self.sendCommand(self.SET_SAMPLE_FREQUENCY, self.sampleFrequency)
     
     def setSampleAverageSize(self, sampleAverageSize):
+        '''
+        Sets the size of the data buffer that will be averaged before being sent to the computer.
+        If the buffer size requested is too large, an error message will be printed.
+        @param sampleAverageSize: Size of the sample buffer that will be averaged. 
+        '''
         self.sampleAverageSize = sampleAverageSize
         if sampleAverageSize > self.MAX_BUFFER_SIZE:
             print("Maximum average size is " + str(self.MAX_BUFFER_SIZE) + ".")
@@ -106,10 +115,20 @@ class Arduino(object):
         self.sendCommand(self.SET_SAMPLE_AVERAGE, self.sampleAverageSize)
     
     def setDeviceReportFrequency(self, deviceReportFrequency):
+        '''
+        Sets the frequency at which the arduino will send the average of all the samples in the 
+        sample buffer.
+        @param deviceReportFrequency: The delay in milliseconds between samples sent to the computer.
+        '''
         self.deviceReportFrequency = deviceReportFrequency
         self.sendCommand(self.SET_REPORT_FREQUENCY, self.deviceReportFrequency)
     
     def setSampleEnable(self, sampleEnabled):
+        '''
+        When the sample enable bit is set, the arduino will start sending samples.
+        @param sampleEnabled: Sets the sample enabled bit in the arduino. If true, the arduino
+        will send samples to the computer. If false, it will stop.
+        '''
         self.sampleEnabled = sampleEnabled;
         self.sendCommand(self.SET_SAMPLE_ENABLE, self.sampleEnabled)
     
@@ -121,6 +140,9 @@ class Arduino(object):
         return float(self.readLine())
     
     def getSampleSet(self):
+        '''
+        Returns the sample set representing the averaged samples for the number of channels being used.
+        '''
         samples = []
         for i in range(self.channelCount):
             samples.append(self.getSample())
